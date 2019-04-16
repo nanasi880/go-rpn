@@ -1,5 +1,7 @@
 # go-rpn
 
+https://godoc.org/go.nanasi880.dev/rpn
+
 ## Simply
 ```go
 package main
