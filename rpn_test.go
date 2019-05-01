@@ -21,6 +21,10 @@ func TestEval(t *testing.T) {
 			expr: "10 20 30 * +",
 			want: "610",
 		},
+		{
+			expr: "0xFFFFFFFFFFFFFFFF",
+			want: "18446744073709551615",
+		},
 	}
 
 	for _, tt := range tests {

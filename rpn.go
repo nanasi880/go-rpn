@@ -37,7 +37,7 @@ func (r *RPN) Eval(resolver Resolver) (decimal.Decimal, error) {
 				}
 				v, err = resolver(tok[1:])
 			} else {
-				v, err = decimal.NewFromString(tok)
+				v, err = tokenToDecimal(tok)
 			}
 			if err != nil {
 				return zero, err

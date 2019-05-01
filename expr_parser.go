@@ -2,8 +2,6 @@ package rpn
 
 import (
 	"fmt"
-
-	"github.com/shopspring/decimal"
 )
 
 type parser struct {
@@ -101,7 +99,7 @@ func (c *parser) parseNumber() {
 			token += c.currentToken()
 		}
 
-		_, err := decimal.NewFromString(token)
+		_, err := tokenToDecimal(token)
 		if err != nil {
 			panic(err)
 		}
