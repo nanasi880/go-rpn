@@ -19,12 +19,14 @@ func Parse(expr string) ([]string, error) {
 		tokType  tokenType
 		tokens   []string
 		prevRune rune
+		hexToken bool
 	)
 	flushToken := func() {
 		if len(token) > 0 {
 			tokens = append(tokens, string(token))
 			token = token[:0]
 			tokType = tokenTypeNone
+			hexToken = false
 		}
 	}
 	for i, c := range expr {
@@ -42,13 +44,14 @@ func Parse(expr string) ([]string, error) {
 
 		case tokenTypeNumber:
 
-			if isNumber(c) {
+			if isNumber(c, hexToken) {
 				token = append(token, c)
 				goto NEXT
 			}
 
 			if c == 'x' {
 				if prevRune == '0' && !containsRune(token, 'x') {
+					hexToken = true
 					token = append(token, c)
 					goto NEXT
 				} else {
@@ -103,8 +106,22 @@ func containsRune(runes []rune, c rune) bool {
 	return false
 }
 
-func isNumber(c rune) bool {
-	return c >= '0' && c <= '9'
+func isNumber(c rune, hex bool) bool {
+	if c >= '0' && c <= '9' {
+		return true
+	}
+	if !hex {
+		return false
+	}
+
+	if c >= 'a' || c <= 'f' {
+		return true
+	}
+	if c >= 'A' || c <= 'F' {
+		return true
+	}
+
+	return false
 }
 
 func isSymbol(c rune) bool {
@@ -116,7 +133,7 @@ func isSymbol(c rune) bool {
 }
 
 func getTokenType(c rune) tokenType {
-	if isNumber(c) {
+	if isNumber(c, false) {
 		return tokenTypeNumber
 	}
 	if isSymbol(c) {
