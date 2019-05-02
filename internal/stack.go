@@ -33,7 +33,7 @@ func (s *Stack) Pop2() (decimal.Decimal, decimal.Decimal, bool) {
 		return zero, zero, false
 	}
 
-	v0, v1 := s.v[len(s.v)-1], s.v[len(s.v)-2]
+	v1, v0 := s.v[len(s.v)-1], s.v[len(s.v)-2]
 
 	s.v = s.v[:len(s.v)-2]
 

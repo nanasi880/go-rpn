@@ -25,6 +25,10 @@ func TestEval(t *testing.T) {
 			expr: "0xFFFFFFFFFFFFFFFF",
 			want: "18446744073709551615",
 		},
+		{
+			expr: "0x1fe $ -",
+			want: "378",
+		},
 	}
 
 	for _, tt := range tests {
@@ -32,7 +36,9 @@ func TestEval(t *testing.T) {
 		r := RPN{
 			Tokens: strings.Split(tt.expr, " "),
 		}
-		v, err := r.Eval(nil)
+		v, err := r.Eval(func(name string) (decimal.Decimal, error) {
+			return decimal.New(132, 0), nil
+		})
 		if err != nil {
 			t.Fatal(err, " ", tt.expr)
 		}
