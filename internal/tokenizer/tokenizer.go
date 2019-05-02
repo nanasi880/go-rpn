@@ -114,10 +114,10 @@ func isNumber(c rune, hex bool) bool {
 		return false
 	}
 
-	if c >= 'a' || c <= 'f' {
+	if c >= 'a' && c <= 'f' {
 		return true
 	}
-	if c >= 'A' || c <= 'F' {
+	if c >= 'A' && c <= 'F' {
 		return true
 	}
 
